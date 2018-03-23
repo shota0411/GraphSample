@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     }
     
     func drawBarGraph() {
+        // グラフにしたい配列
         let bars = BarStroke(graphPoints: [nil, 100, 300, 100, 400, 900, 1200, 400, 1600])
         bars.color = UIColor.blue
         
@@ -202,6 +203,7 @@ class LineStroke: UIView, GraphStroke {
 class BarStroke: UIView, GraphStroke {
     var graphPoints = [CGFloat?]()
     var color = UIColor.white
+    // グラフの上に表示したい文字列の配列
     let text: [String] = ["test", "test", "test", "test", "test", "test", "test", "test", "text"]
     
     convenience init(graphPoints: [CGFloat?]) {
@@ -219,6 +221,9 @@ class BarStroke: UIView, GraphStroke {
         for graphPoint in graphPoints.enumerated() {
             let graphPath = UIBezierPath()
             let label = UILabel()
+            let button = UIButton()
+            button.tag = graphPoint.offset
+            button.addTarget(self, action: #selector(self.tapGraph), for: .touchUpInside)
             let xPoint = getXPoint(index: graphPoint.offset)
             graphPath.move(
                 to: CGPoint(x: xPoint, y: getYPoint(yOrigin: 0))
@@ -228,13 +233,24 @@ class BarStroke: UIView, GraphStroke {
             let nextPoint = CGPoint(x: xPoint, y: getYPoint(yOrigin: graphPoint.element!) + 10)
             graphPath.addLine(to: nextPoint)
             
+            // labelにテキストを入れて表示
             label.text = self.text[graphPoint.offset]
             self.view.addSubview(label)
             label.frame = CGRect(x: xPoint - 15, y: (getYPoint(yOrigin: graphPoint.element!) - 10), width: 30, height: 20)
+            
+            // グラフと同じ位置に透明なbuttonを設置
+            button.backgroundColor = UIColor.red //test
+            self.view.addSubview(button)
+            button.frame = CGRect(x: xPoint - 15, y: getYPoint(yOrigin: graphPoint.element!) + 10, width: 30, height: self.view.frame.height - (getYPoint(yOrigin: graphPoint.element!) + 10))
+            
             graphPath.lineWidth = 30
             color.setStroke()
             graphPath.stroke()
             graphPath.close()
         }
+    }
+    
+    @objc func tapGraph() {
+    
     }
 }
