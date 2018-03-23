@@ -12,35 +12,17 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        drawLineGraph()
         drawBarGraph()
-    }
-    
-    func drawLineGraph() {
-        let stroke1 = LineStroke(graphPoints: [1, 3, 1, 4, 9, 12, 4])
-        
-        let stroke2 = LineStroke(graphPoints: [3, nil, 6, 4, 4])
-        
-        stroke1.color = UIColor.cyan
-        stroke2.color = UIColor.magenta
-        
-        let graphFrame = LineStrokeGraphFrame(strokes: [stroke1, stroke2])
-        
-        let lineGraphView = UIView(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 200))
-        lineGraphView.backgroundColor = UIColor.gray
-        lineGraphView.addSubview(graphFrame)
-        
-        view.addSubview(lineGraphView)
     }
     
     func drawBarGraph() {
         let bars = BarStroke(graphPoints: [nil, 100, 300, 100, 400, 900, 1200, 400, 1600])
-        bars.color = UIColor.green
+        bars.color = UIColor.blue
         
         let barFrame = LineStrokeGraphFrame(strokes: [bars])
         
         let barGraphView = UIView(frame: CGRect(x: 0, y: 240, width: view.frame.width, height: 200))
-        barGraphView.backgroundColor = UIColor.clear
+        barGraphView.backgroundColor = UIColor.lightGray
         barGraphView.addSubview(barFrame)
         
         view.addSubview(barGraphView)
@@ -59,12 +41,12 @@ extension GraphObject {
     
     func drawLine(from: CGPoint, to: CGPoint) {
         let linePath = UIBezierPath()
-        
+
         linePath.move(to: from)
         linePath.addLine(to: to)
-        
+
         linePath.lineWidth = 0.5
-        
+
         let color = UIColor.white
         color.setStroke()
         linePath.stroke()
@@ -95,46 +77,46 @@ extension GraphFrame {
 
 class LineStrokeGraphFrame: UIView, GraphFrame {
     var strokes = [GraphStroke]()
-    
+
     convenience init(strokes: [GraphStroke]) {
         self.init()
         self.strokes = strokes
     }
-    
+
     override func didMoveToSuperview() {
         if self.superview == nil { return }
         self.frame.size = self.superview!.frame.size
         self.view.backgroundColor = UIColor.clear
-        
+
         strokeLines()
     }
-    
+
     func strokeLines() {
         for stroke in strokes {
             self.addSubview(stroke as! UIView)
         }
     }
-    
+
     override func draw(_ rect: CGRect) {
         drawTopLine()
         drawBottomLine()
         drawVerticalLines()
     }
-    
+
     func drawTopLine() {
         self.drawLine(
             from: CGPoint(x: 0, y: frame.height),
             to: CGPoint(x: frame.width, y: frame.height)
         )
     }
-    
+
     func drawBottomLine() {
         self.drawLine(
             from: CGPoint(x: 0, y: 0),
             to: CGPoint(x: frame.width, y: 0)
         )
     }
-    
+
     func drawVerticalLines() {
         for i in 1..<xAxisPointsCount {
             let x = xAxisMargin*CGFloat(i)
@@ -220,6 +202,7 @@ class LineStroke: UIView, GraphStroke {
 class BarStroke: UIView, GraphStroke {
     var graphPoints = [CGFloat?]()
     var color = UIColor.white
+    let text: [String] = ["test", "test", "test", "test", "test", "test", "test", "test", "text"]
     
     convenience init(graphPoints: [CGFloat?]) {
         self.init()
@@ -235,16 +218,19 @@ class BarStroke: UIView, GraphStroke {
     override func draw(_ rect: CGRect) {
         for graphPoint in graphPoints.enumerated() {
             let graphPath = UIBezierPath()
-            
+            let label = UILabel()
             let xPoint = getXPoint(index: graphPoint.offset)
             graphPath.move(
                 to: CGPoint(x: xPoint, y: getYPoint(yOrigin: 0))
             )
             
             if graphPoint.element == nil { continue }
-            let nextPoint = CGPoint(x: xPoint, y: getYPoint(yOrigin: graphPoint.element!))
+            let nextPoint = CGPoint(x: xPoint, y: getYPoint(yOrigin: graphPoint.element!) + 10)
             graphPath.addLine(to: nextPoint)
             
+            label.text = self.text[graphPoint.offset]
+            self.view.addSubview(label)
+            label.frame = CGRect(x: xPoint - 15, y: (getYPoint(yOrigin: graphPoint.element!) - 10), width: 30, height: 20)
             graphPath.lineWidth = 30
             color.setStroke()
             graphPath.stroke()
