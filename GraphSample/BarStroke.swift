@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol BarStrokeDelegate {
+    func tapGraph(_ sender: UIButton)
+}
+
 class BarStroke: UIView, GraphStroke {
     var graphPoints = [CGFloat?]()
     var color = UIColor.white
@@ -15,6 +19,7 @@ class BarStroke: UIView, GraphStroke {
     var text: [String] = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月"]
     var graphButton = [UIButton]()
     var graphLabel = [UILabel]()
+    var delegate: BarStrokeDelegate?
     
     convenience init(graphPoints: [CGFloat?]) {
         self.init()
@@ -92,6 +97,8 @@ class BarStroke: UIView, GraphStroke {
         // タップした
         self.graphLabel[sender.tag].text = "▼"
         self.graphLabel[sender.tag].textAlignment = .center
+        
+        delegate?.tapGraph(sender)
     }
 }
 
