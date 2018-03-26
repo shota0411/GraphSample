@@ -12,6 +12,10 @@
 		03DD07692064AA5E00B100A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03DD07672064AA5E00B100A6 /* Main.storyboard */; };
 		03DD076B2064AA5E00B100A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03DD076A2064AA5E00B100A6 /* Assets.xcassets */; };
 		03DD076E2064AA5E00B100A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03DD076C2064AA5E00B100A6 /* LaunchScreen.storyboard */; };
+		14498D962068A297009656B0 /* BarStroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14498D952068A297009656B0 /* BarStroke.swift */; };
+		14498D982068A2DF009656B0 /* LineStroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14498D972068A2DF009656B0 /* LineStroke.swift */; };
+		14498D9A2068A33A009656B0 /* LineStrokeGraphFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14498D992068A33A009656B0 /* LineStrokeGraphFrame.swift */; };
+		14498D9C2068A476009656B0 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14498D9B2068A476009656B0 /* Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		03DD076A2064AA5E00B100A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03DD076D2064AA5E00B100A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		03DD076F2064AA5E00B100A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		14498D952068A297009656B0 /* BarStroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarStroke.swift; sourceTree = "<group>"; };
+		14498D972068A2DF009656B0 /* LineStroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineStroke.swift; sourceTree = "<group>"; };
+		14498D992068A33A009656B0 /* LineStrokeGraphFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineStrokeGraphFrame.swift; sourceTree = "<group>"; };
+		14498D9B2068A476009656B0 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +68,10 @@
 				03DD076A2064AA5E00B100A6 /* Assets.xcassets */,
 				03DD076C2064AA5E00B100A6 /* LaunchScreen.storyboard */,
 				03DD076F2064AA5E00B100A6 /* Info.plist */,
+				14498D972068A2DF009656B0 /* LineStroke.swift */,
+				14498D992068A33A009656B0 /* LineStrokeGraphFrame.swift */,
+				14498D952068A297009656B0 /* BarStroke.swift */,
+				14498D9B2068A476009656B0 /* Extension.swift */,
 			);
 			path = GraphSample;
 			sourceTree = "<group>";
@@ -136,8 +148,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14498D9A2068A33A009656B0 /* LineStrokeGraphFrame.swift in Sources */,
 				03DD07662064AA5E00B100A6 /* ViewController.swift in Sources */,
 				03DD07642064AA5E00B100A6 /* AppDelegate.swift in Sources */,
+				14498D9C2068A476009656B0 /* Extension.swift in Sources */,
+				14498D962068A297009656B0 /* BarStroke.swift in Sources */,
+				14498D982068A2DF009656B0 /* LineStroke.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
