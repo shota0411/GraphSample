@@ -18,8 +18,8 @@ class ViewController: UIViewController {
     }
     
     func drawBarGraph() {
-        // グラフにしたい配列
-        let bars = BarStroke(graphPoints: [nil, 100, 300, 100, 400, 900, 1200, 400, 1600])
+        // graphPointにグラフにしたい配列を指定する
+        let bars = BarStroke(graphPoints: [nil, 1000, 300, 100, 400, 900, 1200, 400, 1600])
         bars.color = UIColor.blue
         
         let barFrame = LineStrokeGraphFrame(strokes: [bars])

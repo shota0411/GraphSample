@@ -52,7 +52,7 @@ class BarStroke: UIView, GraphStroke {
             
             
             // グラフと同じ位置に透明なbuttonを設置
-            button.backgroundColor = UIColor.red //test
+            button.backgroundColor = UIColor.clear
             self.view.addSubview(button)
             button.frame = CGRect(x: xPoint - 15, y: getYPoint(yOrigin: graphPoint.element!) + 10, width: 30, height: self.view.frame.height - (getYPoint(yOrigin: graphPoint.element!) + 10))
             
@@ -66,13 +66,17 @@ class BarStroke: UIView, GraphStroke {
     }
     
     @IBAction func tapGraph(_ sender: UIButton) {
+        // グラフの色をリセット
         for button in graphButton {
             button.backgroundColor = UIColor.clear
         }
+        // labelの値をリセット
         for label in graphLabel {
             label.text = self.text[graphLabel.index(of: label)!]
         }
+        // タップしたグラフのハイライトの色
         sender.backgroundColor = UIColor.black
+        // タップした
         self.graphLabel[sender.tag - 1].text = "▼"
         self.graphLabel[sender.tag - 1].textAlignment = .center
     }
