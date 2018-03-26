@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var scrollView: UIScrollView = UIScrollView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         drawBarGraph()
@@ -204,7 +206,9 @@ class BarStroke: UIView, GraphStroke {
     var graphPoints = [CGFloat?]()
     var color = UIColor.white
     // グラフの上に表示したい文字列の配列
-    let text: [String] = ["test", "test", "test", "test", "test", "test", "test", "test", "text"]
+    let text: [String] = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月"]
+    var graphButton = [UIButton]()
+    var graphLabel = [UILabel]()
     
     convenience init(graphPoints: [CGFloat?]) {
         self.init()
@@ -234,14 +238,19 @@ class BarStroke: UIView, GraphStroke {
             graphPath.addLine(to: nextPoint)
             
             // labelにテキストを入れて表示
-            label.text = self.text[graphPoint.offset]
+            label.text = self.text[graphPoint.offset - 1]
+            label.textAlignment = .center
             self.view.addSubview(label)
             label.frame = CGRect(x: xPoint - 15, y: (getYPoint(yOrigin: graphPoint.element!) - 10), width: 30, height: 20)
+            self.graphLabel.append(label)
+            
             
             // グラフと同じ位置に透明なbuttonを設置
             button.backgroundColor = UIColor.red //test
             self.view.addSubview(button)
             button.frame = CGRect(x: xPoint - 15, y: getYPoint(yOrigin: graphPoint.element!) + 10, width: 30, height: self.view.frame.height - (getYPoint(yOrigin: graphPoint.element!) + 10))
+            
+            self.graphButton.append(button)
             
             graphPath.lineWidth = 30
             color.setStroke()
@@ -250,7 +259,15 @@ class BarStroke: UIView, GraphStroke {
         }
     }
     
-    @objc func tapGraph() {
-    
+    @IBAction func tapGraph(_ sender: UIButton) {
+        for button in graphButton {
+            button.backgroundColor = UIColor.clear
+        }
+        for label in graphLabel {
+            label.text = self.text[graphLabel.index(of: label)!]
+        }
+        sender.backgroundColor = UIColor.black
+        self.graphLabel[sender.tag - 1].text = "▼"
+        self.graphLabel[sender.tag - 1].textAlignment = .center
     }
 }
