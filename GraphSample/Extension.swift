@@ -9,7 +9,7 @@
 import UIKit
 
 class Extension: NSObject {
-
+    
 }
 
 protocol GraphObject {
@@ -53,7 +53,7 @@ extension GraphFrame {
     
     // X軸の点と点の幅
     var xAxisMargin: CGFloat {
-        return view.frame.width/CGFloat(xAxisPointsCount)
+        return (view.frame.width - 10) / CGFloat(xAxisPointsCount)
     }
 }
 
@@ -82,7 +82,7 @@ extension GraphStroke {
     
     // indexからX座標を取る
     func getXPoint(index: Int) -> CGFloat {
-        return CGFloat(index) * xAxisMargin
+        return CGFloat(index) * xAxisMargin + 25
     }
     
     // 値からY座標を取る
@@ -91,3 +91,4 @@ extension GraphStroke {
         return graphHeight - y
     }
 }
+

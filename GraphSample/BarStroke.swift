@@ -12,7 +12,7 @@ class BarStroke: UIView, GraphStroke {
     var graphPoints = [CGFloat?]()
     var color = UIColor.white
     // グラフの上に表示したい文字列の配列
-    let text: [String] = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月"]
+    var text: [String] = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月"]
     var graphButton = [UIButton]()
     var graphLabel = [UILabel]()
     
@@ -40,21 +40,34 @@ class BarStroke: UIView, GraphStroke {
             )
             
             if graphPoint.element == nil { continue }
-            let nextPoint = CGPoint(x: xPoint, y: getYPoint(yOrigin: graphPoint.element!) + 10)
-            graphPath.addLine(to: nextPoint)
+            // グラフを描画する値の割合で微調整してるだけ（場合によっては必要ない）
+            if graphPoint.element! <= 400.0 {
+                let nextPoint = CGPoint(x: xPoint, y: getYPoint(yOrigin: graphPoint.element!))
+                graphPath.addLine(to: nextPoint)
+                
+                label.frame = CGRect(x: xPoint - 15, y: (getYPoint(yOrigin: graphPoint.element!) - 20), width: 30, height: 20)
+                
+                button.frame = CGRect(x: xPoint - 15, y: getYPoint(yOrigin: graphPoint.element!), width: 30, height: self.view.frame.height - (getYPoint(yOrigin: graphPoint.element!)))
+            }else {
+                let nextPoint = CGPoint(x: xPoint, y: getYPoint(yOrigin: graphPoint.element!) + 30)
+                graphPath.addLine(to: nextPoint)
+                
+                label.frame = CGRect(x: xPoint - 25, y: (getYPoint(yOrigin: graphPoint.element!) + 10), width: 50, height: 20)
+                
+                button.frame = CGRect(x: xPoint - 15, y: getYPoint(yOrigin: graphPoint.element!) + 30, width: 30, height: self.view.frame.height - (getYPoint(yOrigin: graphPoint.element!) + 30))
+            }
             
             // labelにテキストを入れて表示
-            label.text = self.text[graphPoint.offset - 1]
+            label.text = self.text[graphPoint.offset]
             label.textAlignment = .center
             self.view.addSubview(label)
-            label.frame = CGRect(x: xPoint - 15, y: (getYPoint(yOrigin: graphPoint.element!) - 10), width: 30, height: 20)
             self.graphLabel.append(label)
             
             
             // グラフと同じ位置に透明なbuttonを設置
             button.backgroundColor = UIColor.clear
             self.view.addSubview(button)
-            button.frame = CGRect(x: xPoint - 15, y: getYPoint(yOrigin: graphPoint.element!) + 10, width: 30, height: self.view.frame.height - (getYPoint(yOrigin: graphPoint.element!) + 10))
+            
             
             self.graphButton.append(button)
             
@@ -77,7 +90,8 @@ class BarStroke: UIView, GraphStroke {
         // タップしたグラフのハイライトの色
         sender.backgroundColor = UIColor.black
         // タップした
-        self.graphLabel[sender.tag - 1].text = "▼"
-        self.graphLabel[sender.tag - 1].textAlignment = .center
+        self.graphLabel[sender.tag].text = "▼"
+        self.graphLabel[sender.tag].textAlignment = .center
     }
 }
+
